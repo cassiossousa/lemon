@@ -28,8 +28,13 @@ export const getUsers = async ({ since = 0 } = {}) => {
 
   const users = await response.json()
 
-  return users.map(async user => {
+  const userDetailPromises = users.map(async user => {
     const details = await getUserDetails(user.login)
     return { ...user, ...details }
   })
+
+  // the loop above returns an array of promises, so
+  // we need to wait for all of them to finish
+  const userDetails = await Promise.all(userDetailPromises)
+  return userDetails
 }
