@@ -4,7 +4,7 @@ import Link from '../../components/Link'
 
 const recommendations = [
   <>
-    Read the <Link href="#">assignment instructions</Link> carefully;
+    Read the <Link href="/intro#">assignment instructions</Link> carefully;
   </>,
   <>
     Take your time, we are not evaluating how fast you complete the assignment,{' '}
