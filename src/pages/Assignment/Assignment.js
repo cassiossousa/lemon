@@ -83,7 +83,7 @@ const Assignment = () => {
   const handleUserClick = login => {
     // eslint-disable-next-line no-alert
     const decision = window.confirm(
-      `You wiil be redirected to ${login}'s profile`,
+      `You will be redirected to ${login}'s profile`,
     )
 
     if (decision) window.location.href = `https://github.com/${login}`
