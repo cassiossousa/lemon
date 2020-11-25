@@ -130,7 +130,6 @@ describe('Assignment', () => {
     await waitForDomChange(grid)
     fireEvent.scroll(grid)
     await waitForDomChange(grid)
-    await waitForDomChange(grid) // extra waiting for debounce requestAnimationFrame
 
     usersMock.forEach((userMock, i) => {
       const card = getByTestId(`card_${i}`)
@@ -153,12 +152,16 @@ describe('Assignment', () => {
     })
   })
 
-  it(`should redirect to user profile's page`, async () => {
+  it(`should redirect to user profile's page if the user confirms`, async () => {
     mockRequests(2)
     const { getByTestId } = renderPage()
     window.confirm = jest.fn(() => true)
     const grid = getByTestId('card_grid')
     await waitForDomChange(grid)
+
+    fireEvent.scroll(grid)
+    await waitForDomChange(grid)
+
     fireEvent.click(getByTestId('card_51'))
 
     expect(window.location.assign).toHaveBeenCalledWith(
@@ -168,15 +171,14 @@ describe('Assignment', () => {
     window.confirm.mockRestore()
   })
 
-  it(`should not redirect to user profile's page`, async () => {
+  it(`should not redirect to user profile's page if user does not confirm`, async () => {
     mockRequests(2)
     const { getByTestId } = renderPage()
     window.confirm = jest.fn(() => false)
     const grid = getByTestId('card_grid')
+    await waitForDomChange(grid)
 
-    await waitForDomChange(grid)
     fireEvent.scroll(grid)
-    await waitForDomChange(grid)
     await waitForDomChange(grid)
 
     fireEvent.click(getByTestId('card_51'))
