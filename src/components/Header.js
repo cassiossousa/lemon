@@ -14,7 +14,7 @@ const StyledHeader = styled.div(
 
     svg {
       margin-right: ${spacing(1)};
-      width: 26px;
+      width: 1.625rem;
     }
 
     ${media.sm`

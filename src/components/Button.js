@@ -9,10 +9,10 @@ const Container = styled.button(
     text-align: center;
 
     outline: none;
-    width: 341px;
+    width: 21.3125rem;
     padding: ${spacing(3)} ${spacing(7)};
     border: 2px solid ${colors.text.button};
-    border-radius: 50px;
+    border-radius: 3.125rem;
 
     background-color: transparent;
     cursor: pointer;

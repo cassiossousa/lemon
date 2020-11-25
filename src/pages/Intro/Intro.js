@@ -14,7 +14,7 @@ const Container = styled(Grid.Container)(
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 768px;
+    max-width: 48rem;
     flex: 0 1 auto;
     overflow: auto;
     max-height: 100%;

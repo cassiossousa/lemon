@@ -9,7 +9,7 @@ const StyledListItem = styled.li(
 
     &:before {
       content: ${order ? `'${order}'` : `'0'`};
-      flex: 0 0 20px;
+      flex: 0 0 1.25rem;
 
       font-family: 'Roboto', sans-serif;
       font-weight: 700;
@@ -17,7 +17,7 @@ const StyledListItem = styled.li(
       line-height: 1.3rem;
       text-align: center;
 
-      height: 20px;
+      height: 1.25rem;
       margin-right: ${spacing(1)};
 
       background-color: ${colors.primary.main};

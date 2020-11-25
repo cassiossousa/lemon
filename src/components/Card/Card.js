@@ -26,8 +26,8 @@ const Body = styled(PartialContainer)(
     padding-top: ${spacing(2)};
 
     ${Image} {
-      flex: 0 0 64px;
-      height: 64px;
+      flex: 0 0 4rem;
+      height: 4rem;
 
       svg,
       img {
@@ -51,7 +51,7 @@ const Body = styled(PartialContainer)(
       }
 
       > ${Body200} {
-        min-height: 48px;
+        min-height: 3rem;
         max-width: 100%;
       }
     }
@@ -68,7 +68,7 @@ const Separator = styled.hr(
 const Container = styled.div(
   ({ theme: { colors } }) => css`
     border: 1px solid ${colors.secondary};
-    border-radius: 8px;
+    border-radius: 0.5rem;
     cursor: pointer;
 
     &:hover {
@@ -83,7 +83,7 @@ const Footer = styled(PartialContainer)(
     > ${Body100} {
       svg {
         vertical-align: middle;
-        height: 16px;
+        height: 1rem;
       }
 
       color: ${colors.text.caption};

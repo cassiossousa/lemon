@@ -23,7 +23,7 @@ const Container = styled(Grid.Container)(
 
 const loadingAnimation = keyframes`
   0% {
-    width: 40px;
+    width: 2.5rem;
   }
 
   100% {
@@ -43,7 +43,7 @@ const loadingEndAnimation = keyframes`
 const LoadingBar = styled.div(
   ({ theme: { colors }, isLoading }) => css`
     width: 100%;
-    height: 4px;
+    height: 0.25rem;
     position: fixed;
     top: 0;
     left: 0;
