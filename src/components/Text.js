@@ -11,7 +11,8 @@ export const Body100 = styled.p(
 )
 
 export const Body200 = styled.p(
-  ({ bold }) => css`
+  ({ bold, theme: { colors } }) => css`
+    color: ${colors.text.light};
     font-family: 'Roboto', 'monospace';
     font-weight: ${!bold ? '400' : '700'};
     font-size: 0.75rem;
