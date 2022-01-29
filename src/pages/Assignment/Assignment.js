@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import * as Grid from '../../components/Grid'
 import { Title200 } from '../../components/Text'
@@ -8,6 +8,8 @@ import { ReactComponent as RepositoryIcon } from '../../images/RepositoryIcon.sv
 import { ReactComponent as GistIcon } from '../../images/GistIcon.svg'
 import useUsers from '../../hooks/useUsers'
 import useInfiniteScroll from '../../hooks/useInfiniteScroll'
+
+import SearchBar from './SearchBar'
 
 const Container = styled(Grid.Container)(
   ({ theme: { spacing } }) => css`
@@ -64,6 +66,11 @@ const LoadingBar = styled.div(
   `,
 )
 
+const SearchBarContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 const formatStats = ({ repos, gists }) => [
   {
     icon: <RepositoryIcon />,
@@ -78,6 +85,7 @@ const formatStats = ({ repos, gists }) => [
 const Assignment = () => {
   const [{ loading, error, users = [] }, { fetchMore }] = useUsers()
   const listRef = useRef()
+  const [searchInput, setSearchInput] = useState('')
 
   const handleUserClick = login => {
     // eslint-disable-next-line no-alert
@@ -88,7 +96,22 @@ const Assignment = () => {
     if (decision) window.location.assign(`https://github.com/${login}`)
   }
 
-  useInfiniteScroll(listRef, fetchMore, loading)
+  const handleInputChange = ev => {
+    if (ev.target.value !== searchInput) setSearchInput(ev.target.value)
+  }
+
+  const filterUsers = () => {
+    if (!searchInput) return users
+    const upperCaseSearchInput = searchInput.toLocaleUpperCase()
+    return users.filter(user => {
+      return (
+        (user.name && user.name.toLocaleUpperCase().includes(upperCaseSearchInput)) ||
+        (user.login && user.login.toLocaleUpperCase().includes(upperCaseSearchInput))
+      )
+    })
+  }
+
+  useInfiniteScroll(listRef, fetchMore, Boolean(loading || searchInput))
 
   // eslint-disable-next-line no-console
   if (error) console.error(error)
@@ -96,9 +119,12 @@ const Assignment = () => {
   return (
     <Container as="section">
       <LoadingBar isLoading={loading} />
-      <Title200>Github users</Title200>
+      <SearchBarContainer>
+        <Title200>Github users</Title200>
+        <SearchBar data-testid="search_bar" value={searchInput} onChange={handleInputChange} />
+      </SearchBarContainer>
       <CardGrid data-testid="card_grid" ref={listRef}>
-        {users.map((user, i) => (
+        {filterUsers().map((user, i) => (
           <Card
             overline={user.name}
             title={user.login}

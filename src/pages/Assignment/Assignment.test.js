@@ -3,6 +3,7 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import nock from 'nock'
 import {
+  act,
   render,
   waitForDomChange,
   fireEvent,
@@ -188,5 +189,34 @@ describe('Assignment', () => {
     )
 
     window.confirm.mockRestore()
+  })
+
+  it(`should filter users when typing on the searchbar`, async () => {
+    mockRequests(1)
+    const { getByTestId, queryAllByTestId } = renderPage()
+    const grid = getByTestId('card_grid')
+    await waitForDomChange(grid)
+
+    let totalCards = queryAllByTestId(/card_/i)
+    expect(totalCards.length).toStrictEqual(51)
+
+    const searchBar = getByTestId('search_bar')
+    act(() => {
+      fireEvent.change(searchBar, { target: { value: 'name5' }})
+    })
+
+    totalCards = queryAllByTestId(/card_/i)
+    expect(totalCards.length).toStrictEqual(3)
+
+    // First one is the card grid
+    expect(totalCards[0]).toHaveTextContent('name5')
+    expect(totalCards[0]).toHaveTextContent('name50')
+
+    // Second is card_5
+    expect(totalCards[1]).toHaveTextContent('name5')
+    expect(totalCards[1]).not.toHaveTextContent('name50')
+
+    // Third is card_50
+    expect(totalCards[2]).toHaveTextContent('name50')
   })
 })
